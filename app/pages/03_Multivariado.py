@@ -12,44 +12,6 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos premium consistentes con el diseño de home.py
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
-    
-    .main-title {
-        font-family: 'Outfit', sans-serif;
-        color: #2E5B88;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    .subtitle {
-        font-family: 'Inter', sans-serif;
-        color: #5C768D;
-        font-size: 1.15rem;
-        margin-bottom: 1.5rem;
-    }
-    .insight-card {
-        background-color: #f8fafc;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        margin-top: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    .step-title {
-        font-family: 'Outfit', sans-serif;
-        color: #2E5B88;
-        font-weight: 600;
-        font-size: 1.3rem;
-        margin-top: 15px;
-        margin-bottom: 10px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # Carga de datos robusta
 BASE_DIR = Path(__file__).resolve().parents[2]
 DATA_PATH = BASE_DIR / 'data' / 'processed' / 'dataset_hospedaje_features.csv'
@@ -66,8 +28,9 @@ def load_data(path):
 
 df = load_data(DATA_PATH)
 
-st.markdown('<div class="main-title">📊 Análisis Cruzado e Interacciones</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Exploración de relaciones bivariadas y multivariadas para comprender el comportamiento de los subsidios y las cancelaciones.</div>', unsafe_allow_html=True)
+# Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
+st.title("📊 Análisis Cruzado e Interacciones")
+st.caption("Exploración de relaciones bivariadas y multivariadas para comprender el comportamiento de los subsidios y las cancelaciones.")
 st.write("---")
 
 if df is not None:
@@ -84,7 +47,7 @@ if df is not None:
     
     # --- PESTAÑA 1: ANÁLISIS BIVARIADO ---
     with tab_bivariado:
-        st.markdown('<div class="step-title">1. Tasa de Cancelación por Canal de Origen de la Reserva</div>', unsafe_allow_html=True)
+        st.subheader("1. Tasa de Cancelación por Canal de Origen de la Reserva")
         col1, col2 = st.columns([3, 2])
         
         with col1:
@@ -92,6 +55,8 @@ if df is not None:
             origen_cross = pd.crosstab(df['origen'], df['estado'], normalize='index') * 100
             
             fig1, ax1 = plt.subplots(figsize=(8, 4.5))
+            fig1.patch.set_alpha(0.0)
+            ax1.patch.set_alpha(0.0)
             
             # Graficar barra apilada horizontal
             origen_cross.plot(
@@ -110,33 +75,34 @@ if df is not None:
                 # Anotación para checkout (Verde)
                 ax1.text(val_canceled + (val_checkout / 2), n, f"{val_checkout:.1f}%", va='center', ha='center', color='white', fontweight='bold')
                 
-            ax1.set_xlabel("Porcentaje (%)", fontsize=11, color='#475569')
-            ax1.set_ylabel("Canal de Origen", fontsize=11, color='#475569')
-            ax1.legend(["Cancelada", "Checkout"], frameon=True, facecolor='white', edgecolor='#e2e8f0', loc='lower left')
+            ax1.set_xlabel("Porcentaje (%)", fontsize=11)
+            ax1.set_ylabel("Canal de Origen", fontsize=11)
+            ax1.legend(["Cancelada", "Checkout"], frameon=True, loc='lower left')
             ax1.spines['top'].set_visible(False)
             ax1.spines['right'].set_visible(False)
             plt.tight_layout()
-            st.pyplot(fig1)
+            st.pyplot(fig1, clear_figure=True)
             plt.close(fig1)
             
         with col2:
-            st.markdown('<div class="insight-card">', unsafe_allow_html=True)
-            st.write("#### 📌 Comportamiento de los Canales de Origen")
-            st.markdown("""
-            * **Fuga en Gestión Externa**: La tasa de cancelación en reservas tramitadas vía **Gestión Externa** alcanza el **38.8%**, en comparación con el **25.7%** en las de **Gestión Interna** (tramitadas directamente en la oficina del gremio o UNSE).
-            * **Compromiso Diferenciado**: Las reservas directas (internas) tienen un compromiso sustancialmente mayor del huésped. Las externas, al no requerir interacción directa presencial al momento de reservar, facilitan el comportamiento no-show.
-            * **Medida Recomendada**: Implementar el simulador de riesgo y aplicar fricción de reconfirmación obligatoria específicamente sobre el canal de *Gestión Externa*.
-            """)
-            st.markdown('</div>', unsafe_allow_html=True)
+            with st.container(border=True):
+                st.write("#### 📌 Comportamiento de los Canales de Origen")
+                st.markdown("""
+                * **Fuga en Gestión Externa**: La tasa de cancelación en reservas tramitadas vía **Gestión Externa** alcanza el **38.8%**, en comparación con el **25.7%** en las de **Gestión Interna** (tramitadas directamente en la oficina del gremio o UNSE).
+                * **Compromiso Diferenciado**: Las reservas directas (internas) tienen un compromiso sustancialmente mayor del huésped. Las externas, al no requerir interacción directa presencial al momento de reservar, facilitan el comportamiento no-show.
+                * **Medida Recomendada**: Implementar el simulador de riesgo y aplicar fricción de reconfirmación obligatoria específicamente sobre el canal de *Gestión Externa*.
+                """)
             
-        st.write("---")
+        st.divider()
         
-        st.markdown('<div class="step-title">2. Distribución del Monto Subsidiado según Categoría de Huésped</div>', unsafe_allow_html=True)
+        st.subheader("2. Distribución del Monto Subsidiado según Categoría de Huésped")
         col3, col4 = st.columns([3, 2])
         
         with col3:
             # Gráfico de caja (Boxplot) para comparar el monto subsidiado total por categoría
             fig2, ax2 = plt.subplots(figsize=(8, 5))
+            fig2.patch.set_alpha(0.0)
+            ax2.patch.set_alpha(0.0)
             
             # Ordenar las categorías por el promedio del monto subsidiado
             order = df.groupby('categoria_huesped')['monto_subsidiado_total'].median().sort_values(ascending=False).index
@@ -153,27 +119,26 @@ if df is not None:
                 legend=False
             )
             
-            ax2.set_xlabel("Monto Subsidiado Total por Reserva ($)", fontsize=11, color='#475569')
-            ax2.set_ylabel("Categoría del Huésped", fontsize=11, color='#475569')
+            ax2.set_xlabel("Monto Subsidiado Total por Reserva ($)", fontsize=11)
+            ax2.set_ylabel("Categoría del Huésped", fontsize=11)
             ax2.spines['top'].set_visible(False)
             ax2.spines['right'].set_visible(False)
             plt.tight_layout()
-            st.pyplot(fig2)
+            st.pyplot(fig2, clear_figure=True)
             plt.close(fig2)
             
         with col4:
-            st.markdown('<div class="insight-card">', unsafe_allow_html=True)
-            st.write("#### 📌 Distribución y Carga de Subsidios Sociales")
-            st.markdown("""
-            * **Afiliados y Actividad Académica**: Las categorías de **Afiliado** y **Actividad Académica UNSE** presentan los montos de subsidio total más altos por reserva (indicados por cajas desplazadas a la derecha y con medianas elevadas). esto es coherente con el rol social de la institución.
-            * **Impacto de la Sobreocupación**: Dado que estas categorías prioritarias reciben los mayores subsidios, cualquier cancelación de estas reservas implica bloquear recursos sociales de alto valor que podrían haber beneficiado a otros afiliados necesitados.
-            * **Grupos Familiares Grandes**: El análisis del notebook demuestra que cuando estas reservas involucran grupos familiares numerosos (mayor número de noches y personas), el subsidio acumulado se dispara, lo que eleva significativamente el costo de oportunidad perdido si la reserva se cancela.
-            """)
-            st.markdown('</div>', unsafe_allow_html=True)
+            with st.container(border=True):
+                st.write("#### 📌 Distribución y Carga de Subsidios Sociales")
+                st.markdown("""
+                * **Afiliados y Actividad Académica**: Las categorías de **Afiliado** y **Actividad Académica UNSE** presentan los montos de subsidio total más altos por reserva (indicados por cajas desplazadas a la derecha y con medianas elevadas). Esto es coherente con el rol social de la institución.
+                * **Impacto de la Sobreocupación**: Dado que estas categorías prioritarias reciben los mayores subsidios, cualquier cancelación de estas reservas implica bloquear recursos sociales de alto valor que podrían haber beneficiado a otros afiliados necesitados.
+                * **Grupos Familiares Grandes**: El análisis del notebook demuestra que cuando estas reservas involucran grupos familiares numerosos (mayor número de noches y personas), el subsidio acumulado se dispara, lo que eleva significativamente el costo de oportunidad perdido si la reserva se cancela.
+                """)
 
     # --- PESTAÑA 2: ANÁLISIS MULTIVARIADO ---
     with tab_multivariado:
-        st.markdown('<div class="step-title">Matriz de Correlación de Variables Financieras y de Ocupación</div>', unsafe_allow_html=True)
+        st.subheader("Matriz de Correlación de Variables Financieras y de Ocupación")
         col5, col6 = st.columns([3, 2])
         
         with col5:
@@ -209,6 +174,8 @@ if df is not None:
             
             # Graficar Heatmap
             fig3, ax3 = plt.subplots(figsize=(8, 6.5))
+            fig3.patch.set_alpha(0.0)
+            ax3.patch.set_alpha(0.0)
             
             # Usar RdBu_r para visualizar claramente correlaciones positivas (Rojo) y negativas (Azul)
             sns.heatmap(
@@ -225,18 +192,17 @@ if df is not None:
             
             plt.xticks(rotation=45, ha='right')
             plt.tight_layout()
-            st.pyplot(fig3)
+            st.pyplot(fig3, clear_figure=True)
             plt.close(fig3)
             
         with col6:
-            st.markdown('<div class="insight-card">', unsafe_allow_html=True)
-            st.write("#### 📌 Análisis de Interacciones Multivariadas")
-            st.markdown("""
-            * **Correlación Directa de Pérdidas**: El **Costo de Oportunidad** presenta una fortísima correlación positiva con la **Tarifa Base** y las **Noches Totales (Duración de Estadía)**, lo que indica que las cancelaciones de estadías largas a tarifas estándar de mercado representan la mayor fuga de ingresos potenciales.
-            * **Interacción de Ocupantes y Cancelaciones**: La variable `¿Cancelada?` muestra correlaciones positivas con la cantidad de adultos y el origen externo de la reserva. Las reservas de mayor tamaño grupal tramitadas por internet tienden a sufrir mayores tasas de cancelación.
-            * **Impacto del Porcentaje de Subsidio**: Se observa que un mayor `% de Subsidio` tiene una correlación negativa moderada con la tarifa efectiva (a mayor subsidio, menor precio cobrado), pero influye directamente en el incremento del monto subsidiado final por reserva.
-            """)
-            st.markdown('</div>', unsafe_allow_html=True)
+            with st.container(border=True):
+                st.write("#### 📌 Análisis de Interacciones Multivariadas")
+                st.markdown("""
+                * **Correlación Directa de Pérdidas**: El **Costo de Oportunidad** presenta una fortísima correlación positiva con la **Tarifa Base** y las **Noches Totales (Duración de Estadía)**, lo que indica que las cancelaciones de estadías largas a tarifas estándar de mercado representan la mayor fuga de ingresos potenciales.
+                * **Interacción de Ocupantes y Cancelaciones**: La variable `¿Cancelada?` muestra correlaciones positivas con la cantidad de adultos y el origen externo de la reserva. Las reservas de mayor tamaño grupal tramitadas por internet tienden a sufrir mayores tasas de cancelación.
+                * **Impacto del Porcentaje de Subsidio**: Se observa que un mayor `% de Subsidio` tiene una correlación negativa moderada con la tarifa efectiva (a mayor subsidio, menor precio cobrado), pero influye directamente en el incremento del monto subsidiado final por reserva.
+                """)
 
 else:
     st.error(f"⚠️ Error: No se pudo cargar el archivo procesado en la ruta `{DATA_PATH}`. Por favor, verifica que los archivos estén en su ubicación correcta en el repositorio.")
