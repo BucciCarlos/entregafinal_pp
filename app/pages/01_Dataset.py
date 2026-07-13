@@ -10,42 +10,10 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos premium consistentes con el diseño de home.py
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
-    
-    .main-title {
-        font-family: 'Outfit', sans-serif;
-        color: #2E5B88;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    .subtitle {
-        font-family: 'Inter', sans-serif;
-        color: #5C768D;
-        font-size: 1.15rem;
-        margin-bottom: 1.5rem;
-    }
-    .custom-card {
-        background-color: #f8fafc;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        margin-bottom: 1rem;
-    }
-    .step-title {
-        font-family: 'Outfit', sans-serif;
-        color: #2E5B88;
-        font-weight: 600;
-        font-size: 1.3rem;
-        margin-top: 15px;
-        margin-bottom: 10px;
-    }
-    </style>
-""", unsafe_allow_html=True)
+# Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
+st.title("📊 Auditoría y Limpieza de Datos")
+st.caption("Comparativa del dataset bruto frente al procesado y auditoría de calidad de datos para la Caja Complementaria (UNSE).")
+st.write("---")
 
 # Ruta robusta para cargar el archivo
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -64,12 +32,8 @@ def load_data(path):
 
 df = load_data(DATA_PATH)
 
-st.markdown('<div class="main-title">📊 Auditoría y Limpieza de Datos</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Comparativa del dataset bruto frente al procesado y auditoría de calidad de datos para la Caja Complementaria (UNSE).</div>', unsafe_allow_html=True)
-st.write("---")
-
 if df is not None:
-    # 1. KPIs del Proceso de Calidad de Datos
+    # 1. KPIs del Proceso de Calidad de Datos dentro de contenedores estéticos individuales
     original_rows = 119390
     processed_rows = len(df)
     filtered_rows = original_rows - processed_rows
@@ -77,18 +41,22 @@ if df is not None:
     
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("Registros Originales", f"{original_rows:,}".replace(",", "."), help="Total de reservas en la base de datos cruda")
+        with st.container(border=True):
+            st.metric("Registros Originales", f"{original_rows:,}".replace(",", "."), help="Total de reservas en la base de datos cruda")
     with col2:
-        st.metric("Registros Procesados", f"{processed_rows:,}".replace(",", "."), help="Total de reservas tras aplicar filtros de calidad y limpieza")
+        with st.container(border=True):
+            st.metric("Registros Procesados", f"{processed_rows:,}".replace(",", "."), help="Total de reservas tras aplicar filtros de calidad y limpieza")
     with col3:
-        st.metric("Registros Excluidos", f"{filtered_rows:,}".replace(",", "."), f"-{filtered_rows/original_rows*100:.2f}%", delta_color="inverse", help="Registros inconsistentes o nulos depurados")
+        with st.container(border=True):
+            st.metric("Registros Excluidos", f"{filtered_rows:,}".replace(",", "."), f"-{filtered_rows/original_rows*100:.2f}%", delta_color="inverse", help="Registros inconsistentes o nulos depurados")
     with col4:
-        st.metric("Tasa de Retención", f"{retention_rate:.2f}%", help="Porcentaje de datos conservados para el análisis y modelado")
+        with st.container(border=True):
+            st.metric("Tasa de Retención", f"{retention_rate:.2f}%", help="Porcentaje de datos conservados para el análisis y modelado")
         
     st.write("")
     
     # 2. Información del proceso en formato Expanders/Cards
-    st.markdown('<div class="step-title">🛠️ Proceso de Limpieza y Transformación en 6 Pasos</div>', unsafe_allow_html=True)
+    st.subheader("🛠️ Proceso de Limpieza y Transformación en 6 Pasos")
     
     col_a, col_b = st.columns(2)
     with col_a:
@@ -135,7 +103,7 @@ if df is not None:
     """)
     
     st.write("")
-    st.markdown('<div class="step-title">🔍 Explorador de Registros Limpios</div>', unsafe_allow_html=True)
+    st.subheader("🔍 Explorador de Registros Limpios")
     st.write("Filtra el dataset interactivo según el estado de la reserva y la categoría de huésped:")
     
     # Filtros interactivos para el explorador de datos
