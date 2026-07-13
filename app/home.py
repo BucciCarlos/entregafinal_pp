@@ -4,7 +4,7 @@ from pathlib import Path
 
 # 1. Configuración de la página
 st.set_page_config(
-    page_title="Albergue UNSE - Sostenibilidad Financiera",
+    page_title="Caja Complementaria - UNSE",
     page_icon="🏨",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -104,11 +104,9 @@ slides = [
 # Cabecera principal
 col_title, col_badge = st.columns([4, 1.2])
 with col_title:
-    st.markdown('<div class="main-title">🏨 Albergue Institucional UNSE</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">🏨 Caja Complementaria - UNSE</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Sostenibilidad Financiera y Costo de Oportunidad por Cancelaciones</div>', unsafe_allow_html=True)
 
-with col_badge:
-    st.markdown('<div style="text-align: right; padding-top: 15px;"><span class="badge-prod">✓ Ready for Production</span></div>', unsafe_allow_html=True)
 
 # Comprobar si estamos en modo presentación
 if st.session_state.in_presentation:
@@ -157,7 +155,7 @@ else:
         <div class="custom-card">
             <h3 style="font-family: 'Outfit', sans-serif; color: #2E5B88; margin-top:0;">📖 Resumen del Proyecto</h3>
             <p style="font-family: 'Inter', sans-serif; font-size: 1.05rem; color: #334155;">
-                Este proyecto audita y modela la sostenibilidad económica del albergue de la <strong>UNSE</strong>. 
+                Este proyecto audita y modela la sostenibilidad económica de Casteñño 90 de la <strong>UNSE</strong>. 
                 A través de un flujo analítico estructurado en seis fases, investigamos las ineficiencias de las cancelaciones de reservas, 
                 mapeamos el impacto de los subsidios sociales y entrenamos un modelo de Inteligencia Artificial para mitigar pérdidas económicas.
             </p>
