@@ -9,77 +9,32 @@ st.set_page_config(
     layout="wide"
 )
 
-# Estilos premium consistentes con el diseño de home.py
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
-    
-    .main-title {
-        font-family: 'Outfit', sans-serif;
-        color: #2E5B88;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    .subtitle {
-        font-family: 'Inter', sans-serif;
-        color: #5C768D;
-        font-size: 1.15rem;
-        margin-bottom: 1.5rem;
-    }
-    .custom-card {
-        background-color: #f8fafc;
-        border-radius: 12px;
-        padding: 24px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        margin-bottom: 1.5rem;
-    }
-    .step-title {
-        font-family: 'Outfit', sans-serif;
-        color: #2E5B88;
-        font-weight: 600;
-        font-size: 1.3rem;
-        margin-top: 20px;
-        margin-bottom: 12px;
-    }
-    .member-badge {
-        background-color: #eff6ff;
-        color: #1e40af;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        display: inline-block;
-        margin-right: 8px;
-        margin-bottom: 8px;
-        font-family: 'Inter', sans-serif;
-        border: 1px solid #bfdbfe;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-st.markdown('<div class="main-title">💡 Conclusiones y Reglas de Negocio</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Síntesis estratégica de resultados del proyecto y matriz de decisiones operativas para la toma de decisiones.</div>', unsafe_allow_html=True)
+# Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
+st.title("💡 Conclusiones y Reglas de Negocio")
+st.caption("Síntesis estratégica de resultados del proyecto y matriz de decisiones operativas para la toma de decisiones.")
 st.write("---")
 
-# 1. KPIs de Impacto Proyectado
-st.markdown('<div class="step-title">📈 Impacto Operativo y del Modelado</div>', unsafe_allow_html=True)
+# 1. KPIs de Impacto Proyectado dentro de contenedores con borde
+st.subheader("📈 Impacto Operativo y del Modelado")
 col_kpi1, col_kpi2, col_kpi3, col_kpi4 = st.columns(4)
 
 with col_kpi1:
-    st.metric("Precisión del Modelo", "65%", "+15% vs base", help="Mejora en la precisión para detectar cancelaciones reales")
+    with st.container(border=True):
+        st.metric("Precisión del Modelo", "65%", "+15% vs base", help="Mejora en la precisión para detectar cancelaciones reales")
 with col_kpi2:
-    st.metric("Exactitud Global (Accuracy)", "74%", help="Porcentaje de predicciones correctas del clasificador")
+    with st.container(border=True):
+        st.metric("Exactitud Global (Accuracy)", "74%", help="Porcentaje de predicciones correctas del clasificador")
 with col_kpi3:
-    st.metric("Cancelación de Línea Base", "37.24%", help="Tasa histórica de reservas canceladas en Castelli 90")
+    with st.container(border=True):
+        st.metric("Cancelación de Línea Base", "37.24%", help="Tasa histórica de reservas canceladas en Castelli 90")
 with col_kpi4:
-    st.metric("Tasa de Cancelación en Riesgo Alto", "82%", help="Tasa de cancelación empírica del segmento con riesgo >65%")
+    with st.container(border=True):
+        st.metric("Tasa de Cancelación en Riesgo Alto", "82%", help="Tasa de cancelación empírica del segmento con riesgo >65%")
 
 st.write("")
 
 # 2. Políticas de Mitigación
-st.markdown('<div class="step-title">🛠️ Políticas de Mitigación Recomendadas</div>', unsafe_allow_html=True)
+st.subheader("🛠️ Políticas de Mitigación Recomendadas")
 
 col_a, col_b = st.columns(2)
 with col_a:
@@ -111,7 +66,7 @@ with col_b:
 st.write("")
 
 # 3. Matriz de Decisiones Operativas
-st.markdown('<div class="step-title">📋 Matriz de Decisiones Operativas según Nivel de Riesgo</div>', unsafe_allow_html=True)
+st.subheader("📋 Matriz de Decisiones Operativas según Nivel de Riesgo")
 
 # Crear DataFrame de la matriz
 matriz_data = {
@@ -124,28 +79,31 @@ matriz_data = {
     ]
 }
 df_matriz = pd.DataFrame(matriz_data)
-st.table(df_matriz)
+# Mostrar como dataframe estilizado de ancho completo ocultando el índice para mayor elegancia
+st.dataframe(df_matriz, use_container_width=True, hide_index=True)
 
 st.write("")
 
 # 4. Cierre Profesional y Equipo
-st.markdown('<div class="custom-card">', unsafe_allow_html=True)
-st.markdown("### 🤝 Agradecimientos y Cierre")
-st.markdown("""
-Este proyecto demuestra cómo la combinación de análisis exploratorio riguroso y técnicas modernas de Inteligencia Artificial puede traducirse de forma directa en reglas de negocio accionables, protegiendo la sostenibilidad financiera y el rol de fomento social de **Castelli 90 - Caja Complementaria (UNSE)**.
-""")
-
-st.markdown("#### 👥 Integrantes del Equipo (Grupo 1):")
-st.markdown("""
-<span class="member-badge">Bucci, Carlos Matias</span>
-<span class="member-badge">Carabajal, Elba Julieta</span>
-<span class="member-badge">Segovia Albarado, Nicolas Daniel</span>
-""", unsafe_allow_html=True)
-
-st.write("")
-st.markdown("#### 🔗 Enlaces del Proyecto:")
-st.markdown("""
-*   [💻 Repositorio en GitHub](https://github.com/BucciCarlos/entregafinal_pp)
-*   [📓 Jupyter Notebooks del Flujo Analítico](file:///home/bucci/Proyectos/entregafinal_pp/notebooks/)
-""")
-st.markdown('</div>', unsafe_allow_html=True)
+with st.container(border=True):
+    st.subheader("🤝 Agradecimientos y Cierre")
+    st.markdown("""
+    Este proyecto demuestra cómo la combinación de análisis exploratorio riguroso y técnicas modernas de Inteligencia Artificial puede traducirse de forma directa en reglas de negocio accionables, protegiendo la sostenibilidad financiera y el rol de fomento social de **Castelli 90 - Caja Complementaria (UNSE)**.
+    """)
+    
+    st.divider()
+    
+    col_team, col_links = st.columns(2)
+    with col_team:
+        st.markdown("**👥 Integrantes del Equipo (Grupo 1):**")
+        st.markdown("""
+        *   Bucci, Carlos Matias
+        *   Carabajal, Elba Julieta
+        *   Segovia Albarado, Nicolas Daniel
+        """)
+    with col_links:
+        st.markdown("**🔗 Enlaces del Proyecto:**")
+        st.markdown("""
+        *   [💻 Repositorio en GitHub](https://github.com/BucciCarlos/entregafinal_pp)
+        *   [📓 Jupyter Notebooks del Flujo Analítico](file:///home/bucci/Proyectos/entregafinal_pp/notebooks/)
+        """)
