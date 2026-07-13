@@ -2,7 +2,7 @@ import streamlit as st
 
 # 1. Configuración de la página (Debe ser la primera instrucción de Streamlit)
 st.set_page_config(
-    page_title="Albergue UNSE - Sostenibilidad Financiera",
+    page_title="Caja Complementaria UNSE - Sostenibilidad Financiera",
     page_icon="🏨",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -62,7 +62,7 @@ st.markdown("""
 # Cabecera principal
 col_title, col_badge = st.columns([4, 1.2])
 with col_title:
-    st.markdown('<div class="main-title">🏨 Albergue Institucional UNSE</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">🏨 Castelli 90 - Caja Complementaria (UNSE)</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Sostenibilidad Financiera y Costo de Oportunidad por Cancelaciones</div>', unsafe_allow_html=True)
 
 with col_badge:
@@ -76,7 +76,7 @@ st.markdown("""
     <div class="custom-card">
         <h3 style="font-family: 'Outfit', sans-serif; color: #2E5B88; margin-top:0;">📖 Resumen Ejecutivo</h3>
         <p style="font-family: 'Inter', sans-serif; font-size: 1.1rem; color: #334155; line-height: 1.7;">
-            Este proyecto audita, visualiza y modela la sostenibilidad económica del albergue de la <strong>UNSE</strong>. 
+            Este proyecto audita, visualiza y modela la sostenibilidad económica de <strong>Castelli 90 - Caja Complementaria (UNSE)</strong>. 
             A través de un flujo analítico estructurado, investigamos las ineficiencias de las cancelaciones de reservas (tasa histórica de no-show del 37.24%), 
             mapeamos el impacto de los subsidios sociales otorgados y entrenamos un modelo de Inteligencia Artificial (Random Forest Classifier con 82% de precisión para el segmento de riesgo alto) para mitigar pérdidas económicas.
         </p>
