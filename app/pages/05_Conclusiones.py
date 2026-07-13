@@ -74,7 +74,7 @@ with col_kpi2:
 with col_kpi3:
     st.metric("Cancelación de Línea Base", "37.24%", help="Tasa histórica de reservas canceladas en el albergue")
 with col_kpi4:
-    st.metric("Tasa de Cancelación en Riesgo Alto", "76%", help="Tasa de cancelación empírica del segmento con riesgo >65%")
+    st.metric("Tasa de Cancelación en Riesgo Alto", "82%", help="Tasa de cancelación empírica del segmento con riesgo >65%")
 
 st.write("")
 
@@ -85,7 +85,7 @@ col_a, col_b = st.columns(2)
 with col_a:
     with st.expander("🚀 Política Dinámica de Overbooking (Sobreventa)", expanded=True):
         st.markdown("""
-        * **Justificación**: El modelo detecta con gran fiabilidad las reservas de **Riesgo Alto**, de las cuales el **76%** termina cancelándose efectivamente.
+        * **Justificación**: El modelo detecta con gran fiabilidad las reservas de **Riesgo Alto**, de las cuales el **82%** termina cancelándose efectivamente.
         * **Acción sugerida**: Autorizar una sobreventa moderada de hasta el **10%** en fechas críticas de alta demanda únicamente para plazas que coincidan con perfiles clasificados como de Riesgo Alto, amortiguando de forma controlada la ineficiencia operativa por no-show.
         """)
         
@@ -116,7 +116,7 @@ st.markdown('<div class="step-title">📋 Matriz de Decisiones Operativas según
 # Crear DataFrame de la matriz
 matriz_data = {
     "Nivel de Riesgo": ["1. Riesgo Bajo (< 35%)", "2. Riesgo Medio (35% - 65%)", "3. Riesgo Alto (> 65%)"],
-    "Probabilidad de Cancelación": ["Mínima (17% de cancelaciones)", "Moderada (36% de cancelaciones)", "Crítica (76% de cancelaciones)"],
+    "Probabilidad de Cancelación": ["Mínima (17% de cancelaciones)", "Moderada (36% de cancelaciones)", "Crítica (82% de cancelaciones)"],
     "Acción Operativa Recomendada": [
         "Check-in directo sin fricciones. Experiencia de usuario ágil.",
         "Envío de recordatorio automático por WhatsApp / Mail 48 hs antes.",

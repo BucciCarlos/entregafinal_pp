@@ -1,4 +1,4 @@
-# 🏨 Sostenibilidad Financiera y Costo de Oportunidad - Albergue Institucional (UNSE)
+# 🏨 Sostenibilidad Financiera y Costo de Oportunidad - Castelli 90 - Caja Complementaria (UNSE)
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?style=flat-square&logo=python)
 ![Jupyter](https://img.shields.io/badge/Jupyter-Notebooks-orange?style=flat-square&logo=jupyter)
@@ -6,7 +6,7 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-red?style=flat-square&logo=streamlit)
 
 ## 🎯 Objetivo del Proyecto
-Este proyecto de Ciencia de Datos tiene como objetivo mitigar el impacto financiero derivado de una **tasa de cancelación histórica del 37.24%** en el albergue institucional. Mediante el análisis exploratorio exhaustivo y modelos predictivos de Machine Learning, evaluamos la eficiencia de los subsidios otorgados y desarrollamos una segmentación de riesgo operativo para optimizar la toma de decisiones.
+Este proyecto de Ciencia de Datos tiene como objetivo mitigar el impacto financiero derivado de una **tasa de cancelación histórica del 37.24%** en Castelli 90. Mediante el análisis exploratorio exhaustivo y modelos predictivos de Machine Learning, evaluamos la eficiencia de los subsidios otorgados y desarrollamos una segmentación de riesgo operativo para optimizar la toma de decisiones.
 
 ## 🔗 Enlaces Rápidos
 - [💻 Repositorio en GitHub](#) *https://github.com/BucciCarlos/entregafinal_pp*

@@ -189,7 +189,7 @@ if model is not None:
                 st.warning("⚠️ **Riesgo Medio (Incertidumbre)**: Probabilidad de cancelación intermedia. Se sugiere enviar un recordatorio automático de reconfirmación (correo o WhatsApp) 48 horas antes de la llegada.")
             else:
                 st.markdown(f'<div class="prob-display" style="color: #EF4444;">{prob_pct:.2f}%</div>', unsafe_allow_html=True)
-                st.error("🚨 **Riesgo Crítico (Alta Fuga)**: Históricamente, el **76%** de los casos clasificados aquí terminan en cancelación efectiva. Se recomienda aplicar reglas de negocio preventivas: exigir el pago de seña por adelantado o aplicar una sobreventa (overbooking) moderada de la plaza.")
+                st.error("🚨 **Riesgo Crítico (Alta Fuga)**: Históricamente, el **82%** de los casos clasificados aquí terminan en cancelación efectiva. Se recomienda aplicar reglas de negocio preventivas: exigir el pago de seña por adelantado o aplicar una sobreventa (overbooking) moderada de la plaza.")
                 
             st.write("---")
             st.write("#### 💸 Análisis de Impacto Financiero")
