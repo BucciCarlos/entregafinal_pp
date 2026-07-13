@@ -6,7 +6,7 @@ from pathlib import Path
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Análisis Univariado y Línea Base - Albergue UNSE",
+    page_title="Análisis Univariado y Línea Base - Caja Complementaria UNSE",
     page_icon="📈",
     layout="wide"
 )
@@ -107,7 +107,7 @@ if df is not None:
         <div class="kpi-title">🚨 Línea Base Crítica Operativa</div>
         <div class="kpi-value">{cancel_rate:.2f}%</div>
         <div class="kpi-desc">
-            De las <strong>{total_res:,}</strong> reservas procesadas en el histórico del albergue, 
+            De las <strong>{total_res:,}</strong> reservas procesadas en el histórico de Castelli 90, 
             <strong>{total_canceled:,}</strong> terminaron en cancelación efectiva. 
             Esta tasa de cancelación es más del doble de la media promedio de la industria hotelera (15%-19%), 
             generando graves problemas de sobreocupación fantasma y una severa ineficiencia presupuestaria.
@@ -170,7 +170,7 @@ if df is not None:
             st.write("### 📌 Insights del Análisis de Estados")
             st.markdown("""
             * **Impacto del No-Show**: Una tasa de cancelación del **37.24%** representa **44.189 habitaciones bloqueadas** en el sistema que finalmente no generaron ocupación ni beneficio social directo.
-            * **Ineficiencia de Ocupación**: El albergue tiene plazas limitadas destinadas principalmente a estudiantes y convenios gremiales. Cada reserva cancelada que no es detectada a tiempo bloquea la oportunidad de hospedar a un estudiante vulnerable de la **UNSE**.
+            * **Ineficiencia de Ocupación**: Castelli 90 tiene plazas limitadas destinadas principalmente a estudiantes y convenios gremiales. Cada reserva cancelada que no es detectada a tiempo bloquea la oportunidad de hospedar a un estudiante vulnerable de la **UNSE**.
             * **Necesidad de Modelado**: Dado que casi 4 de cada 10 reservas no se concretan, resulta indispensable contar con un modelo que anticipe la probabilidad de no-show para aplicar depósitos de garantía o políticas dinámicas de sobreventa (overbooking).
             """)
             st.markdown('</div>', unsafe_allow_html=True)

@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Conclusiones y Reglas de Negocio - Albergue UNSE",
+    page_title="Conclusiones y Reglas de Negocio - Caja Complementaria UNSE",
     page_icon="💡",
     layout="wide"
 )
@@ -72,7 +72,7 @@ with col_kpi1:
 with col_kpi2:
     st.metric("Exactitud Global (Accuracy)", "74%", help="Porcentaje de predicciones correctas del clasificador")
 with col_kpi3:
-    st.metric("Cancelación de Línea Base", "37.24%", help="Tasa histórica de reservas canceladas en el albergue")
+    st.metric("Cancelación de Línea Base", "37.24%", help="Tasa histórica de reservas canceladas en Castelli 90")
 with col_kpi4:
     st.metric("Tasa de Cancelación en Riesgo Alto", "82%", help="Tasa de cancelación empírica del segmento con riesgo >65%")
 
@@ -132,7 +132,7 @@ st.write("")
 st.markdown('<div class="custom-card">', unsafe_allow_html=True)
 st.markdown("### 🤝 Agradecimientos y Cierre")
 st.markdown("""
-Este proyecto demuestra cómo la combinación de análisis exploratorio riguroso y técnicas modernas de Inteligencia Artificial puede traducirse de forma directa en reglas de negocio accionables, protegiendo la sostenibilidad financiera y el rol de fomento social del **Albergue UNSE**.
+Este proyecto demuestra cómo la combinación de análisis exploratorio riguroso y técnicas modernas de Inteligencia Artificial puede traducirse de forma directa en reglas de negocio accionables, protegiendo la sostenibilidad financiera y el rol de fomento social de **Castelli 90 - Caja Complementaria (UNSE)**.
 """)
 
 st.markdown("#### 👥 Integrantes del Equipo (Grupo 1):")

@@ -5,7 +5,7 @@ from pathlib import Path
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Auditoría y Limpieza de Datos - Albergue UNSE",
+    page_title="Auditoría y Limpieza de Datos - Caja Complementaria UNSE",
     page_icon="📊",
     layout="wide"
 )
@@ -65,7 +65,7 @@ def load_data(path):
 df = load_data(DATA_PATH)
 
 st.markdown('<div class="main-title">📊 Auditoría y Limpieza de Datos</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Comparativa del dataset bruto frente al procesado y auditoría de calidad de datos para el albergue de la UNSE.</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Comparativa del dataset bruto frente al procesado y auditoría de calidad de datos para la Caja Complementaria (UNSE).</div>', unsafe_allow_html=True)
 st.write("---")
 
 if df is not None:
@@ -94,7 +94,7 @@ if df is not None:
     with col_a:
         with st.expander("🌍 Paso 1: Transformación Geográfica y Contextualización", expanded=True):
             st.markdown("""
-            * **Problema**: Datos de origen con códigos de países y localizaciones extranjeras incompatibles con el contexto local del **Albergue UNSE**.
+            * **Problema**: Datos de origen con códigos de países y localizaciones extranjeras incompatibles con el contexto local de **Castelli 90 - Caja Complementaria (UNSE)**.
             * **Acción**: Imputación de provincias argentinas a partir de los orígenes de los huéspedes (con un foco prioritario en el Noroeste Argentino) y unificación de la variable geográfica para un análisis regional coherente.
             """)
         
@@ -107,7 +107,7 @@ if df is not None:
         with st.expander("👥 Paso 3: Categorización del Negocio (Contexto Gremial/UNSE)", expanded=True):
             st.markdown("""
             * **Problema**: Segmentos de mercado genéricos orientados a hotelería comercial tradicional.
-            * **Acción**: Mapeo y re-categorización a perfiles de usuarios institucionales del albergue de la UNSE: **Afiliado**, **Particular** y **Particular trabajo** (convenios gremiales y académicos).
+            * **Acción**: Mapeo y re-categorización a perfiles de usuarios institucionales de la Caja Complementaria (UNSE): **Afiliado**, **Particular** y **Particular trabajo** (convenios gremiales y académicos).
             """)
 
     with col_b:

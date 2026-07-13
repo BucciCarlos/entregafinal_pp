@@ -7,7 +7,7 @@ from pathlib import Path
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Análisis Bivariado y Multivariado - Albergue UNSE",
+    page_title="Análisis Bivariado y Multivariado - Caja Complementaria UNSE",
     page_icon="📊",
     layout="wide"
 )

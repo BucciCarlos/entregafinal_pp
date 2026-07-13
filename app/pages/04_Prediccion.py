@@ -5,7 +5,7 @@ from pathlib import Path
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Predicción de Cancelaciones - Albergue UNSE",
+    page_title="Predicción de Cancelaciones - Caja Complementaria UNSE",
     page_icon="🔮",
     layout="wide"
 )
