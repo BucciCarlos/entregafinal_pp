@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conclusiones y Recomendaciones Estratégicas - Albergue UNSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            --primary: #2E5B88;
+            --primary-light: #eff4f9;
+            --accent: #D96B43;
+            --accent-light: #fdf3ef;
+            --text-main: #2c3e50;
+            --text-muted: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+            --border-radius: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2E5B88 100%);
+            color: #ffffff;
+            padding: 50px 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header h2 {
+            font-family: 'Outfit', sans-serif;
+            margin: 10px 0 0 0;
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .section h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+
+        strong {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        /* Highlight Cards */
+        .highlight-card {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 25px;
+        }
+
+        .highlight-card.accent {
+            background: var(--accent-light);
+            border-left-color: var(--accent);
+        }
+
+        .highlight-card p {
+            margin: 0 0 10px 0;
+        }
+
+        .highlight-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Risk Badges */
+        .risk-container {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .risk-card {
+            flex: 1;
+            min-width: 220px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .risk-card h4 {
+            margin: 0 0 8px 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .risk-card.low h4 { color: #10b981; }
+        .risk-card.medium h4 { color: #f59e0b; }
+        .risk-card.high h4 { color: #ef4444; }
+
+        .risk-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Code Block Styling */
+        .code-container {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            overflow-x: auto;
+            border: 1px solid #2d2d2d;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .code-container code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #d4d4d4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .code-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <h1>Conclusiones y Recomendaciones Estratégicas</h1>
+            <h2>Proyecto: Sostenibilidad Financiera del Albergue Institucional (UNSE/Gremial)</h2>
+        </div>
+        <div class="content">
+
+            <div class="section">
+                <div class="code-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    Setup de Carga de Datos Iniciales (Python)
+                </div>
+                <div class="code-container">
+                    <pre><code>import pandas as pd
+from pathlib import Path
+
+BASE_DIR = Path('.').resolve()
+if BASE_DIR.name == 'notebooks':
+    BASE_DIR = BASE_DIR.parent
+df = pd.read_csv(BASE_DIR / 'data' / 'processed' / 'dataset_hospedaje_features.csv')
+print(f"Dataset Final: {df.shape[0]} reservas procesadas.")</code></pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2><span class="badge-number">1</span>Resumen de la Fase Exploratoria (EDA)</h2>
+                <h3>* Línea Base Crítica: El albergue opera con una tasa histórica de cancelación del 37.24%, lo que representa una ineficiencia operativa severa y un alto costo de oportunidad.</h3>
+<ul>
+<li>Carga Social: La demanda está fuertemente liderada por el segmento "Afiliados". Sin embargo, el análisis multivariado demostró que los grupos familiares grandes (3 a 4 adultos) absorben una proporción significativa del presupuesto de subsidios institucionales.</li>
+</ul>
+<ul>
+<li>Estacionalidad: Se detectaron picos claros en el costo de oportunidad perdido durante meses específicos, lo que exige abandonar las políticas de reserva estáticas durante todo el año.</li>
+</ul>
+            </div>
+        
+            <div class="section">
+                <h2><span class="badge-number">2</span>Rendimiento del Modelado Predictivo</h2>
+                <h3>Se implementó un modelo de Machine Learning (Random Forest Optimizado mediante Cross-Validation) para predecir cancelaciones antes de que ocurran.</h3>
+<p>Mejora del Rendimiento: La optimización de hiperparámetros incrementó la precisión de detección de cancelaciones de un 50% a un 65%.</p>
+<p><strong>Segmentación de Riesgo:</strong> El modelo logró clasificar las reservas futuras en tres segmentos accionables:
+        <div class="risk-container">
+            <div class="risk-card low">
+                <h4>Riesgo Bajo (&lt;35% prob.)</h4>
+                <p>Tasa real de cancelación mínima. Flujo directo de check-in.</p>
+            </div>
+            <div class="risk-card medium">
+                <h4>Riesgo Medio (35%-65% prob.)</h4>
+                <p>Incertidumbre operativa moderada. Recordatorio preventivo.</p>
+            </div>
+            <div class="risk-card high">
+                <h4>Riesgo Alto (&gt;65% prob.)</h4>
+                <p>El 76% de estas reservas se cancelan. Requiere depósito o pre-pago.</p>
+            </div>
+        </div>
+        
+            </div>
+        
+            <div class="section">
+                <h2><span class="badge-number">3</span>Recomendaciones de Negocio y Plan de Acción</h2>
+                <h3>A partir de los datos empíricos, se recomienda a la dirección del albergue implementar las siguientes medidas:</h3>
+<ul>
+<li>Política Dinámica de Overbooking: Autorizar una sobreventa moderada exclusivamente en las plazas ocupadas por perfiles clasificados como de Riesgo Alto, ya que la probabilidad empírica de no-show supera el 75%.</li>
+</ul>
+<ul>
+<li>Fricción Selectiva: Implementar cobros de seña por adelantado o reconfirmaciones telefónicas obligatorias a las 48hs solo para el segmento de Riesgo Medio/Alto. El segmento de Riesgo Bajo debe tener un flujo de check-in sin fricciones.</li>
+</ul>
+<ul>
+<li>Revisión de Canales: Renegociar cupos con los canales de origen que mostraron una tasa de cancelación desproporcionada respecto a los canales directos del gremio/UNSE.</li>
+</ul>
+            </div>
+        
+        </div>
+        <div class="footer">
+            Reporte Ejecutivo de Auditoría de Ciencia de Datos &copy; 2026 - Albergue UNSE / Gremial
+        </div>
+    </div>
+</body>
+</html>
