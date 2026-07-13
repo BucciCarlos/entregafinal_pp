@@ -69,7 +69,7 @@ with col_badge:
     st.markdown('<div style="text-align: right; padding-top: 15px;"><span class="badge-prod">✓ Ready for Production</span></div>', unsafe_allow_html=True)
 
 # Mensaje para guiar al usuario a la barra lateral (Navegación nativa)
-st.markdown('<div class="sidebar-msg">👈 Utilice la barra lateral para navegar por las distintas fases del análisis y predicción.</div>', unsafe_allow_html=True)
+st.info("👈 Utilice el menú lateral izquierdo para navegar por las distintas fases del análisis de datos y el simulador predictivo.")
 
 # Renderizar el Resumen del Proyecto
 st.markdown("""
