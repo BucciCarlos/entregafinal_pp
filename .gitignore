@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# IDEs (VS Code y PyCharm)
+.vscode/
+.idea/
+
+# Entornos virtuales
+env/
+venv/
+mineria_datos/
+.venv/
+.conda/
+
+# Logs (evitar subir registros dinámicos de ejecución)
+logs/*.csv
+logs/*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+.directory
+
+# Configuraciones locales/secretos
+.env
