@@ -8,6 +8,12 @@
 ## 🎯 Objetivo del Proyecto
 Este proyecto de Ciencia de Datos tiene como objetivo mitigar el impacto financiero derivado de una **tasa de cancelación histórica del 37.24%** en Castelli 90. Mediante el análisis exploratorio exhaustivo y modelos predictivos de Machine Learning, evaluamos la eficiencia de los subsidios otorgados y desarrollamos una segmentación de riesgo operativo para optimizar la toma de decisiones.
 
+## 📊 Presentación del Proyecto
+La defensa ejecutiva y los hallazgos clave de este proyecto están disponibles en formato interactivo:
+[Ver Presentación: Sostenibilidad Financiera y Optimización de Reservas](https://gamma.app/docs/Sostenibilidad-Financiera-y-Optimizacion-de-Reservas-edbsm69r7x7d7i1?mode=present#card-fz8bxh3kqdzlsfi).
+
+*Nota: En caso de requerir visualización offline, el repositorio incluye un respaldo estático en la ruta `app/assets/PresentacionPP2.pdf`.*
+
 ## 🔗 Enlaces Rápidos
 - [💻 Repositorio en GitHub](https://github.com/BucciCarlos/entregafinal_pp)
 - [🚀 Dashboard e Informe Interactivo en Streamlit](https://entregafinalpp-grupo1.streamlit.app/)

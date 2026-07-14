@@ -8,6 +8,29 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Estilos CSS personalizados para simetría de las cajas en el Home
+st.markdown(
+    """
+    <style>
+        /* Forzar altura mínima idéntica y distribución flexbox en contenedores con borde */
+        div[data-testid="stVerticalBlockBorderWrapper"] {
+            min-height: 270px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        /* Alinear contenidos y botones en la parte inferior del contenedor */
+        div[data-testid="stVerticalBlockBorderWrapper"] > div {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("🏨 Castelli 90 - Caja Complementaria (UNSE)")
 st.subheader("Sostenibilidad Financiera y Costo de Oportunidad por Cancelaciones")
@@ -39,6 +62,7 @@ with col_left:
         *   **Carabajal, Elba Julieta** 
         *   **Segovia Albarado, Nicolas Daniel** 
         """)
+        st.markdown("**Practica Profresionalizante - ITSE**")
         
 with col_right:
     with st.container(border=True):
