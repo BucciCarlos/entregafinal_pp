@@ -9,8 +9,8 @@
 Este proyecto de Ciencia de Datos tiene como objetivo mitigar el impacto financiero derivado de una **tasa de cancelación histórica del 37.24%** en Castelli 90. Mediante el análisis exploratorio exhaustivo y modelos predictivos de Machine Learning, evaluamos la eficiencia de los subsidios otorgados y desarrollamos una segmentación de riesgo operativo para optimizar la toma de decisiones.
 
 ## 🔗 Enlaces Rápidos
-- [💻 Repositorio en GitHub](#) *https://github.com/BucciCarlos/entregafinal_pp*
-- [🚀 Dashboard e Informe Interactivo en Streamlit](#) *https://entregafinalpp-grupo1.streamlit.app/*
+- [💻 Repositorio en GitHub](https://github.com/BucciCarlos/entregafinal_pp)
+- [🚀 Dashboard e Informe Interactivo en Streamlit](https://entregafinalpp-grupo1.streamlit.app/)
 
 ## 👥 Integrantes del Equipo
 - **Bucci, Carlos Matias** 
