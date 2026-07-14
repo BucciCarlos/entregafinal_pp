@@ -14,6 +14,27 @@ st.title("💡 Conclusiones y Reglas de Negocio")
 st.subheader("Síntesis estratégica de resultados del proyecto y matriz de decisiones operativas para la toma de decisiones.")
 st.write("---")
 
+# CSS quirúrgico: delta inline al lado del valor
+st.markdown("""
+<style>
+/* El wrapper interno de stMetric (hijo directo) usa flex-direction: column.
+   Lo cambiamos a row con wrap para que el label ocupe toda la línea
+   y el value + delta-wrapper queden juntos en la siguiente línea. */
+div[data-testid="stMetric"] > div {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    gap: 0 8px !important;
+}
+/* El label debe ocupar el 100% del ancho para forzar el wrap */
+div[data-testid="stMetric"] > div > label[data-testid="stMetricLabel"] {
+    flex-basis: 100% !important;
+    width: 100% !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # 1. KPIs de Impacto Proyectado dentro de contenedores con borde
 st.subheader("📈 Impacto Operativo y del Modelado")
 col_kpi1, col_kpi2, col_kpi3, col_kpi4 = st.columns(4)
@@ -107,3 +128,7 @@ with st.container(border=True):
         *   [💻 Repositorio en GitHub](https://github.com/BucciCarlos/entregafinal_pp)
         *   [📓 Jupyter Notebooks del Flujo Analítico](file:///home/bucci/Proyectos/entregafinal_pp/notebooks/)
         """)
+
+st.write("")
+# Aviso de simulación académica en la parte inferior (footer)
+st.error("⚠️ **Aviso:** Los datos presentados en este entorno son simulados con fines académicos y NO representan información real de la institución.")

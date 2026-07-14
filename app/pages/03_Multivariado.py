@@ -193,6 +193,17 @@ if df is not None:
             fig3.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             st.plotly_chart(fig3, width="stretch", theme="streamlit")
             
+            with st.expander("💡 ¿Cómo leer esta matriz?"):
+                st.markdown("""
+                La **Matriz de Correlación** mide la fuerza y dirección de la relación lineal entre pares de variables numéricas, oscilando en un rango de **-1 a 1**:
+                *   **1 (Azul oscuro): Correlación positiva perfecta.** Cuando una variable aumenta, la otra aumenta en la misma proporción.
+                *   **-1 (Rojo oscuro): Correlación negativa perfecta.** Cuando una variable aumenta, la otra disminuye en la misma proporción.
+                *   **0 (Blanco): Correlación nula.** No existe una relación lineal directa entre las variables.
+
+                **🔍 Hallazgo Principal del Análisis:**
+                El **Costo de Oportunidad** presenta una fortísima correlación positiva con la **Duración de la Estadía (Duración Estadía)** y la **Tarifa Base**. Esto demuestra empíricamente que la mayor pérdida económica potencial para la Caja no surge de las reservas de bajo costo o de corta duración, sino de las **estadías prolongadas con tarifas comerciales más altas**. Al cancelarse en el último momento (no-show), estas reservas bloquean un inventario de cama de alta prioridad y costo que no puede ser reasignado a tiempo.
+                """)
+            
         with col6:
             with st.container(border=True):
                 st.write("#### 📌 Análisis de Interacciones Multivariadas")

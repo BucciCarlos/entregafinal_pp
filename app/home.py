@@ -73,3 +73,7 @@ with col_right:
         """)
         st.write("")
         st.link_button("Ir al Repositorio de GitHub 🚀", "https://github.com/BucciCarlos/entregafinal_pp", use_container_width=True)
+
+st.write("")
+# Aviso de simulación académica en la parte inferior (footer)
+st.error("⚠️ **Aviso:** Los datos presentados en este entorno son simulados con fines académicos y NO representan información real de la institución.")

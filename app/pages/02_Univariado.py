@@ -127,12 +127,12 @@ if df is not None:
             q_limit = df['tarifa_base'].quantile(0.99)
             filtered_prices = df[df['tarifa_base'] <= q_limit]
             
-            # Calcular la densidad (KDE) usando scipy.stats
+            # Calcular la densidad (KDE) usando scipy.stats y escalar por 1000
             x_eval = np.linspace(0, q_limit, 200)
             kde_base = stats.gaussian_kde(filtered_prices['tarifa_base'])
             kde_effective = stats.gaussian_kde(filtered_prices['tarifa_efectiva'])
-            y_base = kde_base(x_eval)
-            y_effective = kde_effective(x_eval)
+            y_base = kde_base(x_eval) * 1000
+            y_effective = kde_effective(x_eval) * 1000
             
             # Graficar con Plotly
             fig = go.Figure()
@@ -157,7 +157,10 @@ if df is not None:
             
             fig.update_layout(
                 xaxis_title="Tarifa por Noche ($)",
-                yaxis_title="Densidad de Reservas",
+                yaxis_title="Densidad de Reservas (%)",
+                yaxis=dict(
+                    ticksuffix="%"
+                ),
                 legend=dict(
                     orientation="h",
                     yanchor="bottom",
