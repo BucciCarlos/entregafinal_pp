@@ -16,16 +16,19 @@ MODEL_PATH = BASE_DIR / 'models' / 'rf_model_optimizado.pkl'
 
 @st.cache_resource
 def load_model(path):
-    if path.exists():
-        return joblib.load(path)
-    else:
-        # Fallback local path
-        fallback_path = Path("models/rf_model_optimizado.pkl")
-        if fallback_path.exists():
-            return joblib.load(fallback_path)
-        return None
+    try:
+        if path.exists():
+            return joblib.load(path), None
+        else:
+            # Fallback local path
+            fallback_path = Path("models/rf_model_optimizado.pkl")
+            if fallback_path.exists():
+                return joblib.load(fallback_path), None
+            return None, "No se encontró el archivo del modelo en las rutas especificadas."
+    except Exception as e:
+        return None, f"Error de deserialización/compatibilidad: {str(e)}"
 
-model = load_model(MODEL_PATH)
+model, load_error = load_model(MODEL_PATH)
 
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("🔮 Simulador de Riesgo y Predicción")
@@ -161,4 +164,9 @@ if model is not None:
         else:
             st.info("💡 **Simulador Listo**: Modifica los parámetros del formulario de la izquierda y presiona el botón para calcular las probabilidades de cancelación e impactos financieros.")
 else:
-    st.error("⚠️ Error crítico: No se encontró el archivo del modelo entrenado en `models/rf_model_optimizado.pkl`. Por favor, verifica que la fase de entrenamiento y guardado se haya ejecutado correctamente.")
+    if load_error and "deserialización" in load_error:
+        st.error(f"⚠️ **Error de compatibilidad del modelo**: No se pudo deserializar el modelo optimizado. "
+                 f"Esto suele ocurrir por diferencias de arquitectura del procesador o versiones incompatibles de scikit-learn/joblib en el servidor. "
+                 f"Detalles técnicos: {load_error}")
+    else:
+        st.error(f"⚠️ **Error crítico**: No se pudo cargar el modelo. Detalles: {load_error or 'Archivo no encontrado.'}")

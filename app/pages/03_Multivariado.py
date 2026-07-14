@@ -91,7 +91,7 @@ if df is not None:
             fig1.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
             fig1.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             
-            st.plotly_chart(fig1, use_container_width=True, theme="streamlit")
+            st.plotly_chart(fig1, width="stretch", theme="streamlit")
             
         with col2:
             with st.container(border=True):
@@ -129,7 +129,7 @@ if df is not None:
         fig2.update_layout(font=dict(size=15))
         fig2.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
         fig2.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
-        st.plotly_chart(fig2, use_container_width=True, theme="streamlit")
+        st.plotly_chart(fig2, width="stretch", theme="streamlit")
         
         with st.container(border=True):
             st.write("#### 📌 Distribución y Carga de Subsidios Sociales")
@@ -191,7 +191,7 @@ if df is not None:
             fig3.update_layout(font=dict(size=15))
             fig3.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
             fig3.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
-            st.plotly_chart(fig3, use_container_width=True, theme="streamlit")
+            st.plotly_chart(fig3, width="stretch", theme="streamlit")
             
         with col6:
             with st.container(border=True):

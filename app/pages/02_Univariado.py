@@ -106,7 +106,7 @@ if df is not None:
             fig.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
             fig.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             
-            st.plotly_chart(fig, use_container_width=True, theme="streamlit")
+            st.plotly_chart(fig, width="stretch", theme="streamlit")
             
         with col_right:
             with st.container(border=True):
@@ -171,7 +171,7 @@ if df is not None:
             fig.update_layout(font=dict(size=15))
             fig.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
             fig.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
-            st.plotly_chart(fig, use_container_width=True, theme="streamlit")
+            st.plotly_chart(fig, width="stretch", theme="streamlit")
             
             # Mostrar métricas promedio en columnas secundarias
             mean_base = df['tarifa_base'].mean()
@@ -236,7 +236,7 @@ if df is not None:
             fig.update_layout(font=dict(size=15))
             fig.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
             fig.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
-            st.plotly_chart(fig, use_container_width=True, theme="streamlit")
+            st.plotly_chart(fig, width="stretch", theme="streamlit")
             
             # Mostrar distribución de origen en columnas
             st.write("")
