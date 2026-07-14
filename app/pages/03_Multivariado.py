@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.express as px
 import numpy as np
 from pathlib import Path
 
@@ -30,7 +29,7 @@ df = load_data(DATA_PATH)
 
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("📊 Análisis Cruzado e Interacciones")
-st.caption("Exploración de relaciones bivariadas y multivariadas para comprender el comportamiento de los subsidios y las cancelaciones.")
+st.subheader("Exploración de relaciones bivariadas y multivariadas para comprender el comportamiento de los subsidios y las cancelaciones.")
 st.write("---")
 
 if df is not None:
@@ -40,10 +39,8 @@ if df is not None:
         "🕸️ Análisis Multivariado (Correlaciones)"
     ])
     
-    # Configuración de estilo global para gráficos de Matplotlib
-    plt.rcParams['figure.facecolor'] = 'none'
-    plt.rcParams['axes.facecolor'] = 'none'
-    sns.set_theme(style="whitegrid")
+    # Configuración de estilo global para gráficos
+    pass
     
     # --- PESTAÑA 1: ANÁLISIS BIVARIADO ---
     with tab_bivariado:
@@ -53,36 +50,45 @@ if df is not None:
         with col1:
             # Calcular tasas de cancelación por origen
             origen_cross = pd.crosstab(df['origen'], df['estado'], normalize='index') * 100
+            df_origen = origen_cross.reset_index()
+            df_origen_melt = df_origen.melt(
+                id_vars='origen', 
+                value_vars=['cancelada', 'checkout'], 
+                var_name='Estado', 
+                value_name='Porcentaje'
+            )
+            df_origen_melt['Estado'] = df_origen_melt['Estado'].map({'checkout': 'Checkout', 'cancelada': 'Cancelada'})
+            df_origen_melt['Texto'] = df_origen_melt['Porcentaje'].apply(lambda x: f"{x:.1f}%")
             
-            fig1, ax1 = plt.subplots(figsize=(8, 4.5))
-            fig1.patch.set_alpha(0.0)
-            ax1.patch.set_alpha(0.0)
-            
-            # Graficar barra apilada horizontal
-            origen_cross.plot(
-                kind='barh', 
-                stacked=True, 
-                color=['#EF4444', '#10B981'], # Rojo para cancelada, Verde para checkout
-                ax=ax1
+            fig1 = px.bar(
+                df_origen_melt,
+                y='origen',
+                x='Porcentaje',
+                color='Estado',
+                color_discrete_map={'Checkout': '#10B981', 'Cancelada': '#EF4444'},
+                orientation='h',
+                text='Texto',
+                labels={'origen': 'Canal de Origen', 'Porcentaje': 'Porcentaje (%)'}
             )
             
-            # Agregar textos de porcentajes dentro de las barras
-            for n in range(len(origen_cross)):
-                val_canceled = origen_cross.iloc[n, 0]
-                val_checkout = origen_cross.iloc[n, 1]
-                # Anotación para cancelación (Rojo)
-                ax1.text(val_canceled / 2, n, f"{val_canceled:.1f}%", va='center', ha='center', color='white', fontweight='bold')
-                # Anotación para checkout (Verde)
-                ax1.text(val_canceled + (val_checkout / 2), n, f"{val_checkout:.1f}%", va='center', ha='center', color='white', fontweight='bold')
-                
-            ax1.set_xlabel("Porcentaje (%)", fontsize=11)
-            ax1.set_ylabel("Canal de Origen", fontsize=11)
-            ax1.legend(["Cancelada", "Checkout"], frameon=True, loc='lower left')
-            ax1.spines['top'].set_visible(False)
-            ax1.spines['right'].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig1, clear_figure=True)
-            plt.close(fig1)
+            fig1.update_traces(
+                textposition='inside',
+                textfont=dict(color='white', weight='bold')
+            )
+            fig1.update_layout(
+                barmode='stack',
+                height=350,
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="right",
+                    x=1
+                ),
+                margin=dict(l=10, r=10, t=30, b=10)
+            )
+            
+            st.plotly_chart(fig1, use_container_width=True, theme="streamlit")
             
         with col2:
             with st.container(border=True):
@@ -96,45 +102,36 @@ if df is not None:
         st.divider()
         
         st.subheader("2. Distribución del Monto Subsidiado según Categoría de Huésped")
-        col3, col4 = st.columns([3, 2])
+        # Ordenar las categorías por la mediana del monto subsidiado
+        order = list(df.groupby('categoria_huesped')['monto_subsidiado_total'].median().sort_values(ascending=False).index)
         
-        with col3:
-            # Gráfico de caja (Boxplot) para comparar el monto subsidiado total por categoría
-            fig2, ax2 = plt.subplots(figsize=(8, 5))
-            fig2.patch.set_alpha(0.0)
-            ax2.patch.set_alpha(0.0)
-            
-            # Ordenar las categorías por el promedio del monto subsidiado
-            order = df.groupby('categoria_huesped')['monto_subsidiado_total'].median().sort_values(ascending=False).index
-            
-            sns.boxplot(
-                data=df, 
-                y='categoria_huesped', 
-                x='monto_subsidiado_total', 
-                order=order,
-                palette="Blues_r",
-                ax=ax2,
-                orient='h',
-                hue='categoria_huesped',
-                legend=False
-            )
-            
-            ax2.set_xlabel("Monto Subsidiado Total por Reserva ($)", fontsize=11)
-            ax2.set_ylabel("Categoría del Huésped", fontsize=11)
-            ax2.spines['top'].set_visible(False)
-            ax2.spines['right'].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig2, clear_figure=True)
-            plt.close(fig2)
-            
-        with col4:
-            with st.container(border=True):
-                st.write("#### 📌 Distribución y Carga de Subsidios Sociales")
-                st.markdown("""
-                * **Afiliados y Actividad Académica**: Las categorías de **Afiliado** y **Actividad Académica UNSE** presentan los montos de subsidio total más altos por reserva (indicados por cajas desplazadas a la derecha y con medianas elevadas). Esto es coherente con el rol social de la institución.
-                * **Impacto de la Sobreocupación**: Dado que estas categorías prioritarias reciben los mayores subsidios, cualquier cancelación de estas reservas implica bloquear recursos sociales de alto valor que podrían haber beneficiado a otros afiliados necesitados.
-                * **Grupos Familiares Grandes**: El análisis del notebook demuestra que cuando estas reservas involucran grupos familiares numerosos (mayor número de noches y personas), el subsidio acumulado se dispara, lo que eleva significativamente el costo de oportunidad perdido si la reserva se cancela.
-                """)
+        fig2 = px.box(
+            df,
+            y='categoria_huesped',
+            x='monto_subsidiado_total',
+            category_orders={'categoria_huesped': order},
+            color='categoria_huesped',
+            color_discrete_sequence=px.colors.sequential.Blues_r,
+            orientation='h',
+            labels={
+                'categoria_huesped': 'Categoría del Huésped',
+                'monto_subsidiado_total': 'Monto Subsidiado Total por Reserva ($)'
+            }
+        )
+        fig2.update_layout(
+            showlegend=False,
+            height=500,
+            margin=dict(l=10, r=10, t=10, b=10)
+        )
+        st.plotly_chart(fig2, use_container_width=True, theme="streamlit")
+        
+        with st.container(border=True):
+            st.write("#### 📌 Distribución y Carga de Subsidios Sociales")
+            st.markdown("""
+            * **Afiliados y Actividad Académica**: Las categorías de **Afiliado** y **Actividad Académica UNSE** presentan los montos de subsidio total más altos por reserva (indicados por cajas desplazadas a la derecha y con medianas elevadas). Esto es coherente con el rol social de la institución.
+            * **Impacto de la Sobreocupación**: Dado que estas categorías prioritarias reciben los mayores subsidios, cualquier cancelación de estas reservas implica bloquear recursos sociales de alto valor que podrían haber beneficiado a otros afiliados necesitados.
+            * **Grupos Familiares Grandes**: El análisis del notebook demuestra que cuando estas reservas involucran grupos familiares numerosos (mayor número de noches y personas), el subsidio acumulado se dispara, lo que eleva significativamente el costo de oportunidad perdido si la reserva se cancela.
+            """)
 
     # --- PESTAÑA 2: ANÁLISIS MULTIVARIADO ---
     with tab_multivariado:
@@ -172,28 +169,20 @@ if df is not None:
             
             correlation_matrix = df_corr[cols_to_correlate].rename(columns=rename_dict).corr()
             
-            # Graficar Heatmap
-            fig3, ax3 = plt.subplots(figsize=(8, 6.5))
-            fig3.patch.set_alpha(0.0)
-            ax3.patch.set_alpha(0.0)
-            
-            # Usar RdBu_r para visualizar claramente correlaciones positivas (Rojo) y negativas (Azul)
-            sns.heatmap(
-                correlation_matrix, 
-                annot=True, 
-                cmap="RdBu_r", 
-                vmin=-1, 
-                vmax=1, 
-                fmt=".2f",
-                ax=ax3,
-                square=True,
-                cbar_kws={"shrink": 0.8}
+            # Graficar Heatmap con Plotly
+            fig3 = px.imshow(
+                correlation_matrix,
+                text_auto=".2f",
+                color_continuous_scale="RdBu_r",
+                zmin=-1,
+                zmax=1,
+                labels=dict(color="Correlación")
             )
-            
-            plt.xticks(rotation=45, ha='right')
-            plt.tight_layout()
-            st.pyplot(fig3, clear_figure=True)
-            plt.close(fig3)
+            fig3.update_layout(
+                height=500,
+                margin=dict(l=10, r=10, t=10, b=10)
+            )
+            st.plotly_chart(fig3, use_container_width=True, theme="streamlit")
             
         with col6:
             with st.container(border=True):

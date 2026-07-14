@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
+import scipy.stats as stats
 from pathlib import Path
 
 # Configuración de la página
@@ -29,7 +31,7 @@ df = load_data(DATA_PATH)
 
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("📈 Análisis Univariado y Línea Base")
-st.caption("Análisis del comportamiento individual de variables críticas y cuantificación de la problemática de cancelaciones.")
+st.subheader("Análisis del comportamiento individual de variables críticas y cuantificación de la problemática de cancelaciones.")
 st.write("---")
 
 if df is not None:
@@ -59,10 +61,8 @@ if df is not None:
             ]
         )
     
-    # Configuración de estilo global para gráficos de Matplotlib
-    plt.rcParams['figure.facecolor'] = 'none'
-    plt.rcParams['axes.facecolor'] = 'none'
-    sns.set_theme(style="whitegrid")
+    # Configuración de estilo global para gráficos
+    pass
     
     # 3. Lógica de renderizado según la selección
     if "Distribución de Estados" in option:
@@ -71,35 +71,39 @@ if df is not None:
         with col_left:
             st.subheader("Frecuencia y Proporción de Estados de Reserva")
             
-            # Gráfico de barras de checkout vs cancelada
-            fig, ax = plt.subplots(figsize=(8, 5))
-            fig.patch.set_alpha(0.0)
-            ax.patch.set_alpha(0.0)
-            
-            colors = ['#10B981', '#EF4444'] # Verde para checkout, Rojo para cancelada
             state_counts = df['estado'].value_counts()
+            df_states = pd.DataFrame({
+                'Estado': state_counts.index.map({'checkout': 'Checkout (Éxito)', 'cancelada': 'Cancelada (No-Show)'}),
+                'Reservas': state_counts.values,
+                'Porcentaje': (state_counts.values / total_res) * 100,
+                'color_map': state_counts.index
+            })
             
-            sns.barplot(
-                x=state_counts.index.map({'checkout': 'Checkout (Éxito)', 'cancelada': 'Cancelada (No-Show)'}), 
-                y=state_counts.values, 
-                palette=colors,
-                ax=ax,
-                hue=state_counts.index,
-                legend=False
+            df_states['Texto'] = df_states.apply(lambda row: f"{row['Reservas']:,} ({row['Porcentaje']:.2f}%)".replace(",", "."), axis=1)
+            
+            fig = px.bar(
+                df_states,
+                x='Estado',
+                y='Reservas',
+                color='color_map',
+                color_discrete_map={'checkout': '#10B981', 'cancelada': '#EF4444'},
+                text='Texto',
+                labels={'Reservas': 'Cantidad de Reservas', 'Estado': 'Estado Final'}
             )
             
-            # Anotaciones de porcentajes en las barras (omitiendo color hardcodeado para que use el del tema)
-            for i, val in enumerate(state_counts.values):
-                pct = (val / total_res) * 100
-                ax.text(i, val + 1500, f"{val:,} ({pct:.2f}%)".replace(",", "."), ha='center', fontweight='bold')
-                
-            ax.set_ylabel("Cantidad de Reservas", fontsize=11)
-            ax.set_xlabel("Estado Final", fontsize=11)
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig, clear_figure=True)
-            plt.close(fig)
+            fig.update_traces(
+                textposition='outside',
+                textfont=dict(weight='bold')
+            )
+            fig.update_layout(
+                showlegend=False,
+                height=400,
+                margin=dict(l=10, r=10, t=10, b=10),
+                xaxis=dict(showgrid=False),
+                yaxis=dict(showgrid=True)
+            )
+            
+            st.plotly_chart(fig, use_container_width=True, theme="streamlit")
             
         with col_right:
             with st.container(border=True):
@@ -116,40 +120,52 @@ if df is not None:
         with col_left:
             st.subheader("Comparativa de Distribución: Tarifa Base vs. Tarifa Efectiva")
             
-            # Gráfico de densidad (KDE) para comparar las tarifas
-            fig, ax = plt.subplots(figsize=(8, 5))
-            fig.patch.set_alpha(0.0)
-            ax.patch.set_alpha(0.0)
-            
             # Filtrar tarifas por seguridad visual
             q_limit = df['tarifa_base'].quantile(0.99)
             filtered_prices = df[df['tarifa_base'] <= q_limit]
             
-            sns.kdeplot(
-                data=filtered_prices['tarifa_base'], 
-                fill=True, 
-                color='#94a3b8', 
-                label='Tarifa Base (Comercial)', 
-                ax=ax,
-                linewidth=2
-            )
-            sns.kdeplot(
-                data=filtered_prices['tarifa_efectiva'], 
-                fill=True, 
-                color='#2E5B88', 
-                label='Tarifa Efectiva (Con Subsidio)', 
-                ax=ax,
-                linewidth=2
-            )
+            # Calcular la densidad (KDE) usando scipy.stats
+            x_eval = np.linspace(0, q_limit, 200)
+            kde_base = stats.gaussian_kde(filtered_prices['tarifa_base'])
+            kde_effective = stats.gaussian_kde(filtered_prices['tarifa_efectiva'])
+            y_base = kde_base(x_eval)
+            y_effective = kde_effective(x_eval)
             
-            ax.set_xlabel("Tarifa por Noche ($)", fontsize=11)
-            ax.set_ylabel("Densidad de Reservas", fontsize=11)
-            ax.legend(frameon=True)
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig, clear_figure=True)
-            plt.close(fig)
+            # Graficar con Plotly
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(
+                x=x_eval, 
+                y=y_base, 
+                mode='lines', 
+                name='Tarifa Base (Comercial)',
+                line=dict(color='#94a3b8', width=2.5),
+                fill='tozeroy',
+                fillcolor='rgba(148, 163, 184, 0.4)'
+            ))
+            fig.add_trace(go.Scatter(
+                x=x_eval, 
+                y=y_effective, 
+                mode='lines', 
+                name='Tarifa Efectiva (Con Subsidio)',
+                line=dict(color='#2E5B88', width=2.5),
+                fill='tozeroy',
+                fillcolor='rgba(46, 91, 136, 0.4)'
+            ))
+            
+            fig.update_layout(
+                xaxis_title="Tarifa por Noche ($)",
+                yaxis_title="Densidad de Reservas",
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="right",
+                    x=1
+                ),
+                height=400,
+                margin=dict(l=10, r=10, t=30, b=10)
+            )
+            st.plotly_chart(fig, use_container_width=True, theme="streamlit")
             
             # Mostrar métricas promedio en columnas secundarias
             mean_base = df['tarifa_base'].mean()
@@ -182,33 +198,36 @@ if df is not None:
         with col_left:
             st.subheader("Reservas por Categorías de Huésped")
             
-            # Gráfico de barras horizontal para categorías de huésped
-            fig, ax = plt.subplots(figsize=(8, 5))
-            fig.patch.set_alpha(0.0)
-            ax.patch.set_alpha(0.0)
+            cat_counts = df['categoria_huesped'].value_counts().sort_values(ascending=True)
+            df_cat = pd.DataFrame({
+                'Categoría': cat_counts.index,
+                'Reservas': cat_counts.values,
+                'Texto': [f"{val:,}".replace(",", ".") for val in cat_counts.values]
+            })
             
-            cat_counts = df['categoria_huesped'].value_counts()
-            
-            sns.barplot(
-                y=cat_counts.index, 
-                x=cat_counts.values, 
-                palette="Blues_r", 
-                ax=ax,
-                hue=cat_counts.index,
-                legend=False
+            fig = px.bar(
+                df_cat,
+                x='Reservas',
+                y='Categoría',
+                orientation='h',
+                text='Texto',
+                color='Reservas',
+                color_continuous_scale=px.colors.sequential.Blues,
+                labels={'Reservas': 'Cantidad de Reservas', 'Categoría': 'Categoría del Huésped'}
             )
             
-            # Agregar etiquetas de cantidad
-            for i, val in enumerate(cat_counts.values):
-                ax.text(val + 500, i, f"{val:,}".replace(",", "."), va='center', fontweight='bold')
-                
-            ax.set_xlabel("Cantidad de Reservas", fontsize=11)
-            ax.set_ylabel("Categoría del Huésped", fontsize=11)
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            plt.tight_layout()
-            st.pyplot(fig, clear_figure=True)
-            plt.close(fig)
+            fig.update_traces(
+                textposition='outside',
+                textfont=dict(weight='bold')
+            )
+            fig.update_layout(
+                coloraxis_showscale=False,
+                height=400,
+                margin=dict(l=10, r=10, t=10, b=10),
+                xaxis=dict(showgrid=True),
+                yaxis=dict(showgrid=False)
+            )
+            st.plotly_chart(fig, use_container_width=True, theme="streamlit")
             
             # Mostrar distribución de origen en columnas
             st.write("")

@@ -11,7 +11,7 @@ st.set_page_config(
 
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("💡 Conclusiones y Reglas de Negocio")
-st.caption("Síntesis estratégica de resultados del proyecto y matriz de decisiones operativas para la toma de decisiones.")
+st.subheader("Síntesis estratégica de resultados del proyecto y matriz de decisiones operativas para la toma de decisiones.")
 st.write("---")
 
 # 1. KPIs de Impacto Proyectado dentro de contenedores con borde

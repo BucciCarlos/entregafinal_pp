@@ -12,7 +12,7 @@ st.set_page_config(
 
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("📊 Auditoría y Limpieza de Datos")
-st.caption("Comparativa del dataset bruto frente al procesado y auditoría de calidad de datos para la Caja Complementaria (UNSE).")
+st.subheader("Comparativa del dataset bruto frente al procesado y auditoría de calidad de datos para la Caja Complementaria (UNSE).")
 st.write("---")
 
 # Ruta robusta para cargar el archivo

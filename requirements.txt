@@ -8,3 +8,6 @@ seaborn==0.13.2
 
 # Soporte para archivos Excel (requerido internamente por pandas para leer archivos .xlsx)
 openpyxl==3.1.5
+
+# Visualizaciones interactivas y adaptables al tema
+plotly>=5.18.0

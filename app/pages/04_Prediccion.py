@@ -29,7 +29,7 @@ model = load_model(MODEL_PATH)
 
 # Cabecera principal con componentes nativos (compatibilidad total con Light/Dark Theme)
 st.title("🔮 Simulador de Riesgo y Predicción")
-st.caption("Ingresa los datos de una reserva potencial para evaluar en tiempo real su probabilidad de cancelación e impacto financiero.")
+st.subheader("Ingresa los datos de una reserva potencial para evaluar en tiempo real su probabilidad de cancelación e impacto financiero.")
 st.write("---")
 
 # Mapeo de meses y multiplicadores de tarifa según la categoría (obtenidos del análisis de datos)
