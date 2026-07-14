@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from pathlib import Path
 
 # Configuración de la página
@@ -13,14 +12,17 @@ st.set_page_config(
 st.title("Defensa de Proyecto: Sostenibilidad Financiera y Optimización de Reservas")
 st.markdown("---")
 
-# Integración del iframe de Gamma
-iframe_code = (
-    '<iframe src="https://gamma.app/embed/edbsm69r7x7d7i1" '
-    'style="width: 100%; height: 700px; border: none; border-radius: 8px;" '
-    'allow="fullscreen" title="Sostenibilidad Financiera y Optimizacion de Reservas"></iframe>'
-)
+# Explicación y botón de enlace externo a Gamma
+st.markdown("Haz clic en el botón inferior para abrir la presentación interactiva en una nueva pestaña a pantalla completa.")
 
-components.html(iframe_code, height=700)
+# Envolver el botón en columnas para centrarlo y destacarlo en la UI
+col_left, col_center, col_right = st.columns([1, 2, 1])
+with col_center:
+    st.link_button(
+        "🚀 Abrir Presentación Interactiva (Gamma)", 
+        url="https://gamma.app/docs/Sostenibilidad-Financiera-y-Optimizacion-de-Reservas-edbsm69r7x7d7i1?mode=present#card-fz8bxh3kqdzlsfi",
+        use_container_width=True
+    )
 
 # Botón de Respaldo Local (Hard Backup)
 st.divider()
