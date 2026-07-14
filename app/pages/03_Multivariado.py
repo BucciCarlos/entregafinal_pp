@@ -87,6 +87,9 @@ if df is not None:
                 ),
                 margin=dict(l=10, r=10, t=30, b=10)
             )
+            fig1.update_layout(font=dict(size=15))
+            fig1.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
+            fig1.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             
             st.plotly_chart(fig1, use_container_width=True, theme="streamlit")
             
@@ -123,6 +126,9 @@ if df is not None:
             height=500,
             margin=dict(l=10, r=10, t=10, b=10)
         )
+        fig2.update_layout(font=dict(size=15))
+        fig2.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
+        fig2.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
         st.plotly_chart(fig2, use_container_width=True, theme="streamlit")
         
         with st.container(border=True):
@@ -182,6 +188,9 @@ if df is not None:
                 height=500,
                 margin=dict(l=10, r=10, t=10, b=10)
             )
+            fig3.update_layout(font=dict(size=15))
+            fig3.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
+            fig3.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             st.plotly_chart(fig3, use_container_width=True, theme="streamlit")
             
         with col6:

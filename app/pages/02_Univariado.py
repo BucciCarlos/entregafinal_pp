@@ -102,6 +102,9 @@ if df is not None:
                 xaxis=dict(showgrid=False),
                 yaxis=dict(showgrid=True)
             )
+            fig.update_layout(font=dict(size=15))
+            fig.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
+            fig.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             
             st.plotly_chart(fig, use_container_width=True, theme="streamlit")
             
@@ -165,6 +168,9 @@ if df is not None:
                 height=400,
                 margin=dict(l=10, r=10, t=30, b=10)
             )
+            fig.update_layout(font=dict(size=15))
+            fig.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
+            fig.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             st.plotly_chart(fig, use_container_width=True, theme="streamlit")
             
             # Mostrar métricas promedio en columnas secundarias
@@ -227,6 +233,9 @@ if df is not None:
                 xaxis=dict(showgrid=True),
                 yaxis=dict(showgrid=False)
             )
+            fig.update_layout(font=dict(size=15))
+            fig.update_xaxes(title_font=dict(size=17), tickfont=dict(size=14))
+            fig.update_yaxes(title_font=dict(size=17), tickfont=dict(size=14))
             st.plotly_chart(fig, use_container_width=True, theme="streamlit")
             
             # Mostrar distribución de origen en columnas
